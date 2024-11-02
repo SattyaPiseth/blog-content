@@ -13,7 +13,7 @@ const Card = ({ blogs }) => {
               CardTitle={blog.title}
               titleHref={`#/blogs/${blog.id}`} // Assuming you want a link to the blog
               CardDescription={blog.content.substring(0, 100) + "..."} // Shorten content
-              Button="View Details"
+              Button="Read"
               btnHref={`#/blogs/${blog.id}`} // Link to full blog
               author={blog.author} // Pass author details to SingleCard
             />
@@ -50,9 +50,9 @@ const SingleCard = ({
         <p className="mb-7 text-base leading-relaxed text-body-color dark:text-dark-6">
           {CardDescription}
         </p>
-
+        <div className="flex gap-10 justify-center mt-4 px-5">
         {author && (
-          <div className="flex items-center justify-center mb-4">
+          <div className="flex items-center justify-center mt-5">
             <img
               src={author.profileUrl}
               alt={`${author.username}'s profile`}
@@ -63,7 +63,8 @@ const SingleCard = ({
             </span>
           </div>
         )}
-
+         {/* Social Icons */}
+        <div className="flex gap-4 justify-center mt-4">
         {Button && (
           <a
             href={btnHref}
@@ -72,6 +73,23 @@ const SingleCard = ({
             {Button}
           </a>
         )}
+
+        {/* Social Icons */}
+        
+          <img
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/db15df27ce58dba9cfe945803e23d22c3e4c08c4baaa252de7cd4a26827dbf02?placeholderIfAbsent=true&apiKey=91a4dbf22d714a40962aa33b33fe0fd6"
+            alt="Social icon"
+            className="object-contain shrink-0 my-auto w-5 aspect-[1.11]"
+          />
+          <img
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/b9fb6718387cf4f368800147fbe7f34ad8ffa421b93b62f6ae215f13472b3d29?placeholderIfAbsent=true&apiKey=91a4dbf22d714a40962aa33b33fe0fd6"
+            alt="Social icon"
+            className="object-contain shrink-0 w-6 aspect-square"
+          />
+        </div>
+        </div>
       </div>
     </div>
   );
