@@ -61,16 +61,17 @@ function App() {
 
   return (
     <>
-    <div className='text-2xl  mx-5 py-5'>
+    <div className='text-4xl  mx-5 py-5'>
     <h1 > <strong>Hey, You dev here!</strong>Discover</h1>
     <h1>my stories and creative ideas.</h1>
     </div>
     <div className='mx-5'>
-      <h2 className='text-lg font-bold'>Recent Posts</h2>
+      <h2 className='text-2xl font-bold my-5'>Recent Posts</h2>
     </div>
     <Card blogs={blogs}/>
-    <h2 className='text-lg font-bold mx-5 py-5'>Popular Categories</h2>
-    <Button className='mx-5 rounded-full'>Hello</Button>
+    <h2 className='text-2xl font-bold mx-5 my-5'>Popular Categories</h2>
+    <Button className='mx-5 rounded-full bg-gray-300 text-black my-5'>Programming</Button>
+    <Card blogs={blogs}/>
     </>
   )
 }

@@ -23,9 +23,9 @@ export function NavbarComponent() {
         </span>
       </NavbarBrand>
       <div className="flex md:order-2">
-        <Button>Login</Button>
+        <Button className="bg-black text-white">Login</Button>
         <div className="mx-5">
-        <Button>Sign Up</Button>
+        <Button className="bg-black text-white">Sign Up</Button>
         </div>
       </div>
     </Navbar>
