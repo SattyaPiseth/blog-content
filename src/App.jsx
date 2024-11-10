@@ -6,7 +6,7 @@ import { fetchAllBlogs } from './redux/features/blog/blogSlice';
 import { Button } from '@material-tailwind/react';
 import CardProduct from "./page/cardproduct/CardProduct";
 import { getProfile } from './redux/features/profile/profileSlice';
-
+import CategoriesList from './page/cardproduct/CategoriesList';
 
 function App() {
   const dispatch = useDispatch();
@@ -70,8 +70,11 @@ function App() {
       <h2 className='text-2xl font-bold my-5'>Recent Posts</h2>
     </div>
     <Card blogs={blogs}/>
-    <h2 className='text-2xl font-bold mx-5 my-5'>Popular Categories</h2>
-    <Button className='mx-5 rounded-full bg-gray-300 text-black my-5'>Programming</Button>
+    <div className='mx-5'>
+    <h2 className='text-2xl font-bold mx-8 my-5'>Popular Categories</h2>
+    <CategoriesList />
+    </div>
+   
     <Card blogs={blogs}/>
     
     </>
