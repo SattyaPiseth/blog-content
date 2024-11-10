@@ -33,11 +33,7 @@ export default function CardAccount() {
         {status === 'loading' && <p className="text-center text-lg">Loading...</p>}
         {status === 'failed' && <p className="text-center text-red-500">Error: {error}</p>}
         {status === 'succeeded' && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {blogs.map(blog => (
-              <Card key={blog.id} blog={blog} />
-            ))}
-          </div>
+        <Card blogs={blogs}/>
         )}
       </div>
 
@@ -47,11 +43,7 @@ export default function CardAccount() {
         {status === 'loading' && <p className="text-center text-lg">Loading...</p>}
         {status === 'failed' && <p className="text-center text-red-500">Error: {error}</p>}
         {status === 'succeeded' && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {blogs.map(blog => (
-              <Card key={blog.id} blog={blog} />
-            ))}
-          </div>
+       <Card blogs={blogs}/>
         )}
       </div>
 

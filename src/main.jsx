@@ -46,11 +46,8 @@ const route = createBrowserRouter([
       {
         path: "/profilecard",
         element: <ProfileCard/>
-      },
-      // {
-      //   path: "/createblog",
-      //   element:<CreateBlog/> 
-      // }
+      }
+
   
 ]);
 createRoot(document.getElementById("root")).render(
