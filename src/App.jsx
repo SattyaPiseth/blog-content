@@ -4,13 +4,14 @@ import Card from './components/common/card/ProductCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllBlogs } from './redux/features/blog/blogSlice';
 import { Button } from '@material-tailwind/react';
+// import CardProduct from "./page/cardproduct/CardProduct";
+// import { getProfile } from './redux/features/profile/profileSlice';
+
 
 function App() {
   const dispatch = useDispatch();
   const {blogs,status,error} = useSelector((state) => state.blog)
   // console.log(blogs)
-  
-
   useEffect(()=>{
     if(status === 'idle'){
       dispatch(fetchAllBlogs())
@@ -55,9 +56,9 @@ function App() {
             </div>
           </div>
         </div>
-      </section></>);
+      </section>
+      </>);
   }
-
 
   return (
     <>
@@ -72,6 +73,7 @@ function App() {
     <h2 className='text-2xl font-bold mx-5 my-5'>Popular Categories</h2>
     <Button className='mx-5 rounded-full bg-gray-300 text-black my-5'>Programming</Button>
     <Card blogs={blogs}/>
+    
     </>
   )
 }
