@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllBlogs } from './redux/features/blog/blogSlice';
 import { Button } from '@material-tailwind/react';
 import CardProduct from "./page/cardproduct/CardProduct";
-import { getProfile } from './redux/features/profile/profileSlice';
+// import { getProfile } from './redux/features/profile/profileSlice';
 import CategoriesList from './page/cardproduct/CategoriesList';
+// import AddCategoryForm from './page/cardproduct/AddCategoryForm';
+
 
 function App() {
   const dispatch = useDispatch();
@@ -66,17 +68,18 @@ function App() {
     <h1 > <strong>Hey, You dev here!</strong>Discover</h1>
     <h1>my stories and creative ideas.</h1>
     </div>
+    <div >
+    <h2 className='text-2xl font-bold mx-5 my-5'>Popular Categories</h2>
+    <div >
+      {/* <AddCategoryForm/> */}
+    <CategoriesList />
+ </div>
+    </div>
     <div className='mx-5'>
       <h2 className='text-2xl font-bold my-5'>Recent Posts</h2>
     </div>
     <Card blogs={blogs}/>
-    <div className='mx-5'>
-    <h2 className='text-2xl font-bold mx-8 my-5'>Popular Categories</h2>
-    <CategoriesList />
-    </div>
-   
-    <Card blogs={blogs}/>
-    
+
     </>
   )
 }

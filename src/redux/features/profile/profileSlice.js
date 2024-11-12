@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { BASE_URL } from '../../../api/api';
 
-// action method
+// Action to get profile
 export const getProfile = createAsyncThunk(
   "profile/getProfile",
   async (token, { rejectWithValue }) => {
@@ -14,6 +14,32 @@ export const getProfile = createAsyncThunk(
       });
       const data = await response.json();
       return data.profile; // Return profile data directly
+    } catch (error) {
+      return rejectWithValue(error.message || "Something went wrong");
+    }
+  }
+);
+
+// Action to update profile
+export const updateProfile = createAsyncThunk(
+  "profile/updateProfile",
+  async ({ token, bio, profileUrl }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${BASE_URL}users/profile`, {
+        method: "PUT",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ bio, profileUrl }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update profile");
+      }
+
+      const data = await response.json();
+      return data.profile; // Return the updated profile data
     } catch (error) {
       return rejectWithValue(error.message || "Something went wrong");
     }
@@ -38,11 +64,23 @@ const profileSlice = createSlice({
       })
       .addCase(getProfile.fulfilled, (state, action) => {
         state.loading = false;
-        state.profile = action.payload; // Set the profile data
+        state.profile = action.payload;
       })
       .addCase(getProfile.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload; // Handle error state
+        state.error = action.payload;
+      })
+      .addCase(updateProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.loading = true ;
+        state.profile = action.payload; // Update the profile data
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
+        state.loading = true;
+        state.error = action.payload;
       });
   },
 });
