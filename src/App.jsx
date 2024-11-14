@@ -7,7 +7,8 @@ import { Button } from '@material-tailwind/react';
 import CardProduct from "./page/cardproduct/CardProduct";
 // import { getProfile } from './redux/features/profile/profileSlice';
 import CategoriesList from './page/cardproduct/CategoriesList';
-// import AddCategoryForm from './page/cardproduct/AddCategoryForm';
+
+
 
 
 function App() {
@@ -79,6 +80,7 @@ function App() {
       <h2 className='text-2xl font-bold my-5'>Recent Posts</h2>
     </div>
     <Card blogs={blogs}/>
+    
 
     </>
   )

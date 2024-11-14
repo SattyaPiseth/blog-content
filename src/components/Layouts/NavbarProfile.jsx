@@ -1,7 +1,20 @@
 import React from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css'; // Import Font Awesome styles
+import { useNavigate } from 'react-router-dom';
 
 function NavbarProfile() {
+  const navigate = useNavigate();
+
+  // Function to handle bookmark click
+  const handleBookmarkClick = () => {
+    navigate("/bookmarkedblog");
+  };
+
+  // Function to handle search icon click
+  const handleSearchClick = () => {
+    navigate("/BlogSearch");
+  };
+
   return (
     <div>
       <div className="bg-blue-200 flex p-3 items-center justify-between rounded">
@@ -23,8 +36,20 @@ function NavbarProfile() {
             <span className="ml-2 hidden sm:inline">Create Blog</span>
           </button>
 
+          {/* Search Icon */}
+          <button 
+            className="text-blue-700 hover:text-blue-900"
+            onClick={handleSearchClick}
+          >
+            <i className="fas fa-search text-lg"></i>
+            <span className="ml-2 hidden sm:inline">Search</span>
+          </button>
+
           {/* Bookmark Icon */}
-          <button className="text-blue-700 hover:text-blue-900">
+          <button 
+            className="text-blue-700 hover:text-blue-900"
+            onClick={handleBookmarkClick}
+          >
             <i className="fas fa-bookmark text-lg"></i>
             <span className="ml-2 hidden sm:inline">Bookmark</span>
           </button>

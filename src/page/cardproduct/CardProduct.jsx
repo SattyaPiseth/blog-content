@@ -13,7 +13,7 @@ function CardProduct() {
   }, [dispatch]);
 
   // Handle Drive URL - Customize this as needed
-  const driveUrl = "https://drive.google.com/your-link"; // Replace with actual drive URL
+  // const driveUrl = "https://drive.google.com/your-link"; // Replace with actual drive URL
 
   return (
     <section className="max-w-full px-4 sm:px-6 lg:px-12 py-8">
@@ -62,18 +62,6 @@ function CardProduct() {
           className="object-contain w-full aspect-[1.37] mb-8"
         />
       </article>
-
-      {/* Add Drive Link Button */}
-      {/* <div className="mt-8 text-center">
-        <a
-          href={driveUrl} // link to the drive
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block bg-blue-500 text-white px-6 py-3 rounded-md text-lg font-semibold hover:bg-blue-600 transition duration-300"
-        >
-          Download Files from Drive
-        </a>
-      </div> */}
     </section>
   );
 }

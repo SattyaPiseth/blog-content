@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_URL } from "../../../api/api";
 
-// Action methods
+// Existing action methods
 export const fetchAllBlogs = createAsyncThunk(
   "blog/fetchAllBlogs",
   async (_, { rejectWithValue }) => {
@@ -41,12 +41,42 @@ export const likeBlogPost = createAsyncThunk(
   }
 );
 
+// New action for bookmarking a blog post
+export const bookmarkBlogPost = createAsyncThunk(
+  "blogs/bookmarkBlogPost",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${BASE_URL}blogs/${id}/bookmark`, { method: "POST" });
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message || "something went wrong");
+    }
+  }
+);
+
+// New action for searching blogs by title
+export const searchBlogs = createAsyncThunk(
+  "blogs/searchBlogs",
+  async (title, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${BASE_URL}blogs?title=${title}`);
+      const data = await response.json();
+      return data; // Return the result from the API
+    } catch (error) {
+      return rejectWithValue(error.message || "something went wrong");
+    }
+  }
+);
+
 // Slice definition
 const blogSlice = createSlice({
   name: "blog",
   initialState: {
     blogs: [],
     blog: {},
+    bookmarkedBlogs: [], // Array to store bookmarked blog IDs or blog objects
+    searchResults: [], // Array to store search results
     status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
     error: null,
   },
@@ -79,7 +109,6 @@ const blogSlice = createSlice({
         state.status = "loading";
       })
       .addCase(likeBlogPost.fulfilled, (state, { payload }) => {
-        // Optionally, find the blog post and update likes in state
         const blogIndex = state.blogs.findIndex((blog) => blog.id === payload.id);
         if (blogIndex !== -1) {
           state.blogs[blogIndex] = payload;
@@ -87,6 +116,35 @@ const blogSlice = createSlice({
         state.status = "succeeded";
       })
       .addCase(likeBlogPost.rejected, (state, { error }) => {
+        state.error = error.message;
+        state.status = "failed";
+      })
+      // Handle bookmarkBlogPost cases
+      .addCase(bookmarkBlogPost.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(bookmarkBlogPost.fulfilled, (state, { payload }) => {
+        const blogId = payload.id;
+        // Check if the blog is already bookmarked
+        const isBookmarked = state.bookmarkedBlogs.some((id) => id === blogId);
+        if (!isBookmarked) {
+          state.bookmarkedBlogs.push(blogId);
+        }
+        state.status = "succeeded";
+      })
+      .addCase(bookmarkBlogPost.rejected, (state, { error }) => {
+        state.error = error.message;
+        state.status = "failed";
+      })
+      // Handle searchBlogs cases
+      .addCase(searchBlogs.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(searchBlogs.fulfilled, (state, { payload }) => {
+        state.searchResults = payload.blogs || payload; // Store the search results
+        state.status = "succeeded";
+      })
+      .addCase(searchBlogs.rejected, (state, { error }) => {
         state.error = error.message;
         state.status = "failed";
       }),

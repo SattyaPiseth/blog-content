@@ -1,10 +1,7 @@
 // NavbarComponent.js
-import {
-  Button,
-  Navbar,
-  NavbarBrand,
-} from "flowbite-react";
+import { Button, Navbar, NavbarBrand } from "flowbite-react";
 import { useNavigate } from "react-router-dom";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"; // Importing the search icon
 
 export function NavbarComponent() {
   const navigate = useNavigate();
@@ -22,12 +19,23 @@ export function NavbarComponent() {
             LOGO
           </span>
         </NavbarBrand>
+        
+        {/* Search Icon */}
+        <div className="flex items-center mx-5">
+          <MagnifyingGlassIcon 
+            className="h-6 w-6 text-black cursor-pointer"
+            onClick={() => navigate('/BlogSearch')} // Navigate to Create Blog page
+          />
+        </div>
+
         <div className="flex md:order-2">
           <Button className="bg-black text-white" onClick={() => navigate('/login')}>
             Login
           </Button>
           <div className="mx-5">
-            <Button className="bg-black text-white" onClick={() => navigate('/register')}>Sign Up</Button>
+            <Button className="bg-black text-white" onClick={() => navigate('/register')}>
+              Sign Up
+            </Button>
           </div>
         </div>
       </Navbar>

@@ -13,6 +13,11 @@ import CardAccount from "./page/cardproduct/CardAccount.jsx";
 import 'react-toastify/ReactToastify.css'
 import { ToastContainer } from "react-toastify";
 import ProfileCard from "./page/cardproduct/ProfileCard.jsx";
+import BookmarkedBlog from "./page/cardproduct/BookmarkedBlog.jsx";
+import BlogSearch from "./page/cardproduct/BlogSearch.jsx";
+import CreateBlog from "./page/cardproduct/CreateBlog.jsx";
+
+
 
 
 const route = createBrowserRouter([
@@ -47,7 +52,22 @@ const route = createBrowserRouter([
       {
         path: "/profilecard",
         element: <ProfileCard/>
+      },
+      {
+        path: "/bookmarkedblog",
+        element: <BookmarkedBlog/>
+      },
+      {
+        path: "/blogsearch",
+        element: <BlogSearch/>
+      },
+      {
+        path: "/createblog",
+        element: <CreateBlog/>
       }
+
+   
+
 
   
 ]);

@@ -1,14 +1,16 @@
 import React from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css'; // Import Font Awesome styles
 import { useNavigate } from 'react-router-dom';
-// import CardAccount from '../../page//cardproduct/CardAccount';
-// import ProfileCard from '../../page/cardproduct/ProfileCard';
 
 function Navbar() {
   const navigate = useNavigate();
 
   const goToProfileCard = () => {
     navigate('/profilecard'); // The path to `ProfileCard`
+  };
+
+  const handleSearchClick = () => {
+    navigate('/BlogSearch'); // Navigate to "Create Blog" page on search icon click
   };
 
   return (
@@ -32,8 +34,17 @@ function Navbar() {
             <span className="ml-2 hidden sm:inline">Create Blog</span>
           </button>
 
+          {/* Search Icon */}
+          <button 
+            className="text-blue-700 hover:text-blue-900"
+            onClick={handleSearchClick}
+          >
+            <i className="fas fa-search text-lg"></i>
+            <span className="ml-2 hidden sm:inline">Search</span>
+          </button>
+
           {/* User Profile Icon */}
-         <button className="text-blue-700 hover:text-blue-900" onClick={goToProfileCard}>
+          <button className="text-blue-700 hover:text-blue-900" onClick={goToProfileCard}>
             <i className="fas fa-user-circle text-lg"></i>
             <span className="ml-2 hidden sm:inline">Username</span>
           </button>

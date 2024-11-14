@@ -1,9 +1,12 @@
 // redux/store.js
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore,combineReducers  } from "@reduxjs/toolkit";
 import blogReducer from "../redux/features/blog/blogSlice";
 import userReducer from "../redux/features/user/userSlice";
 import profileReducer from "../redux/features/profile/profileSlice";
 import categoryReducer from "../redux/features/category/categorySlice";
+import bookmarkReducer from "../redux/features/blog/bookmarkSlice";
+
+
 
 const store = configureStore({
   reducer: {
@@ -11,6 +14,9 @@ const store = configureStore({
     user: userReducer,
     profile: profileReducer,
     category: categoryReducer,
+    bookmarks: bookmarkReducer,
+    
+   
   },
 });
 
