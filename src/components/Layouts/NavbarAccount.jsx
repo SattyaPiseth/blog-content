@@ -12,6 +12,9 @@ function Navbar() {
   const handleSearchClick = () => {
     navigate('/BlogSearch'); // Navigate to "Create Blog" page on search icon click
   };
+  const handleCreateBlogClick = () => {
+    navigate('/CreateBlog'); // Navigate to "Create Blog" page on search icon click
+  };
 
   return (
     <div>
@@ -29,7 +32,8 @@ function Navbar() {
 
         <div className="flex items-center space-x-4">
           {/* Create Blog Icon */}
-          <button className="text-blue-700 hover:text-blue-900">
+          <button className="text-blue-700 hover:text-blue-900"
+          onClick={handleCreateBlogClick}>
             <i className="fas fa-plus-circle text-lg"></i>
             <span className="ml-2 hidden sm:inline">Create Blog</span>
           </button>

@@ -9,6 +9,10 @@ function NavbarProfile() {
   const handleBookmarkClick = () => {
     navigate("/bookmarkedblog");
   };
+  // Function to handle Createblog click
+  const handleCreateBlogClick = () => {
+    navigate("/createblog");
+  };
 
   // Function to handle search icon click
   const handleSearchClick = () => {
@@ -29,11 +33,13 @@ function NavbarProfile() {
           </span>
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4"
+             onClick={handleCreateBlogClick}>
           {/* Create Blog Icon */}
           <button className="text-blue-700 hover:text-blue-900">
             <i className="fas fa-plus-circle text-lg"></i>
-            <span className="ml-2 hidden sm:inline">Create Blog</span>
+            <span className="ml-2 hidden sm:inline"
+            >Create Blog</span>
           </button>
 
           {/* Search Icon */}
