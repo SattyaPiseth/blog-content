@@ -5,8 +5,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllBlogs } from './redux/features/blog/blogSlice';
 import { Button } from '@material-tailwind/react';
 import CardProduct from "./page/cardproduct/CardProduct";
-// import { getProfile } from './redux/features/profile/profileSlice';
 import CategoriesList from './page/cardproduct/CategoriesList';
+
+
+
 
 
 

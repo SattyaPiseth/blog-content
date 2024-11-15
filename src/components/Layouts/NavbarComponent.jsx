@@ -24,7 +24,7 @@ export function NavbarComponent() {
         <div className="flex items-center mx-5">
           <MagnifyingGlassIcon 
             className="h-6 w-6 text-black cursor-pointer"
-            onClick={() => navigate('/BlogSearch')} // Navigate to Create Blog page
+            onClick={() => navigate('/SearchAndFilterBlogs')} // Navigate to Create Blog page
           />
         </div>
 
