@@ -15,6 +15,7 @@ import { ToastContainer } from "react-toastify";
 import ProfileCard from "./page/cardproduct/ProfileCard.jsx";
 import BookmarkedBlog from "./page/cardproduct/BookmarkedBlog.jsx";
 import CreateBlog from "./page/cardproduct/CreateBlog.jsx";
+import SearchAndFilter from "./page/cardproduct/SearchAndFilter.jsx";
 
 
 
@@ -29,15 +30,12 @@ const route = createBrowserRouter([
         path: "/",
         element: <App />
       },
-      {
-        path: "/blogs/:id",
-        element: <CardProduct/>
-      },
-
-   
     ]
     },
-  
+    {
+      path: "/blogs/:id",
+      element: <CardProduct/>
+    },
       {
         path: "/login",
         element: <Login/>
@@ -61,6 +59,10 @@ const route = createBrowserRouter([
       {
         path: "/createblog",
         element: <CreateBlog/>
+      },
+      {
+        path: "/searchandfilter",
+        element: <SearchAndFilter/>
       }
 
   

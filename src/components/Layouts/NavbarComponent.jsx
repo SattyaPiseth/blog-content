@@ -19,15 +19,6 @@ export function NavbarComponent() {
             LOGO
           </span>
         </NavbarBrand>
-        
-        {/* Search Icon */}
-        <div className="flex items-center mx-5">
-          <MagnifyingGlassIcon 
-            className="h-6 w-6 text-black cursor-pointer"
-            onClick={() => navigate('/SearchAndFilterBlogs')} // Navigate to Create Blog page
-          />
-        </div>
-
         <div className="flex md:order-2">
           <Button className="bg-black text-white" onClick={() => navigate('/login')}>
             Login

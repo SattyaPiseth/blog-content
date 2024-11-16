@@ -10,7 +10,7 @@ function Navbar() {
   };
 
   const handleSearchClick = () => {
-    navigate('/BlogSearch'); // Navigate to "Create Blog" page on search icon click
+    navigate('/SearchAndFilter'); // Navigate to "Create Blog" page on search icon click
   };
   const handleCreateBlogClick = () => {
     navigate('/CreateBlog'); // Navigate to "Create Blog" page on search icon click

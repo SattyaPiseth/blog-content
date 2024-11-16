@@ -1,14 +1,23 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+// Fetch Categories
 export const fetchCategories = createAsyncThunk(
   'category/fetchCategories',
-  async () => {
-    const response = await fetch("https://blog-api.automatex.dev/categories");
-    const data = await response.json();
-    return data;
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await fetch("https://blog-api.automatex.dev/categories");
+      if (!response.ok) {
+        throw new Error('Failed to fetch categories');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
+// Create Category
 export const createCategory = createAsyncThunk(
   'category/createCategory',
   async (categoryName, { rejectWithValue }) => {
@@ -43,6 +52,7 @@ const categorySlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // Fetch Categories
       .addCase(fetchCategories.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -54,8 +64,9 @@ const categorySlice = createSlice({
       })
       .addCase(fetchCategories.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload;
       })
+      // Create Category
       .addCase(createCategory.pending, (state) => {
         state.loading = true;
         state.error = null;

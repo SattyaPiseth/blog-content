@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { BASE_URL } from "../../../api/api";
 
-// Existing action methods
+// Fetch all blogs
 export const fetchAllBlogs = createAsyncThunk(
   "blog/fetchAllBlogs",
   async (_, { rejectWithValue }) => {
@@ -15,6 +15,7 @@ export const fetchAllBlogs = createAsyncThunk(
   }
 );
 
+// Fetch a single blog by ID
 export const fetchById = createAsyncThunk(
   "blogs/fetchById",
   async (id, { rejectWithValue }) => {
@@ -28,6 +29,7 @@ export const fetchById = createAsyncThunk(
   }
 );
 
+// Like a blog post
 export const likeBlogPost = createAsyncThunk(
   "blogs/likeBlogPost",
   async (id, { rejectWithValue }) => {
@@ -41,7 +43,7 @@ export const likeBlogPost = createAsyncThunk(
   }
 );
 
-// New action for bookmarking a blog post
+// Bookmark a blog post
 export const bookmarkBlogPost = createAsyncThunk(
   "blogs/bookmarkBlogPost",
   async (id, { rejectWithValue }) => {
@@ -55,14 +57,14 @@ export const bookmarkBlogPost = createAsyncThunk(
   }
 );
 
-// New action for searching blogs by title
+// Search blogs by title
 export const searchBlogs = createAsyncThunk(
   "blogs/searchBlogs",
   async (title, { rejectWithValue }) => {
     try {
       const response = await fetch(`${BASE_URL}blogs?title=${title}`);
       const data = await response.json();
-      return data; // Return the result from the API
+      return data;
     } catch (error) {
       return rejectWithValue(error.message || "something went wrong");
     }
@@ -73,16 +75,21 @@ export const searchBlogs = createAsyncThunk(
 const blogSlice = createSlice({
   name: "blog",
   initialState: {
-    blogs: [],
-    blog: {},
-    bookmarkedBlogs: [], // Array to store bookmarked blog IDs or blog objects
-    searchResults: [], // Array to store search results
+    blogs: [], // All blogs
+    blog: {}, // Single blog details
+    bookmarkedBlogs: [], // List of bookmarked blog IDs
+    searchResults: [], // Search result list
     status: "idle", // 'idle' | 'loading' | 'succeeded' | 'failed'
     error: null,
   },
-  reducers: {},
+  reducers: {
+    clearSearchResults: (state) => {
+      state.searchResults = [];
+    },
+  },
   extraReducers: (builder) =>
     builder
+      // Fetch all blogs
       .addCase(fetchAllBlogs.pending, (state) => {
         state.status = "loading";
       })
@@ -94,6 +101,7 @@ const blogSlice = createSlice({
         state.error = error.message;
         state.status = "failed";
       })
+      // Fetch a single blog by ID
       .addCase(fetchById.pending, (state) => {
         state.status = "loading";
       })
@@ -105,6 +113,7 @@ const blogSlice = createSlice({
         state.error = error.message;
         state.status = "failed";
       })
+      // Like a blog post
       .addCase(likeBlogPost.pending, (state) => {
         state.status = "loading";
       })
@@ -119,13 +128,12 @@ const blogSlice = createSlice({
         state.error = error.message;
         state.status = "failed";
       })
-      // Handle bookmarkBlogPost cases
+      // Bookmark a blog post
       .addCase(bookmarkBlogPost.pending, (state) => {
         state.status = "loading";
       })
       .addCase(bookmarkBlogPost.fulfilled, (state, { payload }) => {
         const blogId = payload.id;
-        // Check if the blog is already bookmarked
         const isBookmarked = state.bookmarkedBlogs.some((id) => id === blogId);
         if (!isBookmarked) {
           state.bookmarkedBlogs.push(blogId);
@@ -136,12 +144,12 @@ const blogSlice = createSlice({
         state.error = error.message;
         state.status = "failed";
       })
-      // Handle searchBlogs cases
+      // Search blogs by title
       .addCase(searchBlogs.pending, (state) => {
         state.status = "loading";
       })
       .addCase(searchBlogs.fulfilled, (state, { payload }) => {
-        state.searchResults = payload.blogs || payload; // Store the search results
+        state.searchResults = payload.blogs || payload;
         state.status = "succeeded";
       })
       .addCase(searchBlogs.rejected, (state, { error }) => {
@@ -150,4 +158,5 @@ const blogSlice = createSlice({
       }),
 });
 
+export const { clearSearchResults } = blogSlice.actions;
 export default blogSlice.reducer;

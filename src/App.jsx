@@ -9,10 +9,6 @@ import CategoriesList from './page/cardproduct/CategoriesList';
 
 
 
-
-
-
-
 function App() {
   const dispatch = useDispatch();
   const {blogs,status,error} = useSelector((state) => state.blog)
