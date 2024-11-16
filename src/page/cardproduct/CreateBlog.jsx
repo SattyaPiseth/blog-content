@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for routing
-import Quill from 'quill'; // Import Quill instance
+import { useNavigate } from 'react-router-dom';
+import Quill from 'quill';
 import Editor from '../../redux/features/blog/Editor';
 
 const CreateBlog = () => {
@@ -11,12 +11,34 @@ const CreateBlog = () => {
     thumbnail: '',
   });
 
-  const [readOnly, setReadOnly] = useState(false); // Add readOnly state
-  const [range, setRange] = useState(null); // Add state for range
-  const [lastChange, setLastChange] = useState(null); // Add state for last change
+  const [error, setError] = useState(''); // State for error message
 
   const quillRef = useRef();
   const navigate = useNavigate(); // Initialize useNavigate
+
+  // Function to upload thumbnail
+  const uploadThumbnail = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+  
+    try {
+      const response = await fetch('https://blog-api.automatex.dev/uploads', {
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        const errorText = await response.text();  // Change to text() to catch the error message
+        throw new Error(`Failed to upload thumbnail: ${response.status} - ${errorText}`);
+      }
+  
+      const data = await response.json();
+      return data.url;
+    } catch (error) {
+      console.error('Thumbnail upload error:', error.message);
+      throw error;
+    }
+  };  
 
   const handleEditorChange = () => {
     const editorContent = quillRef.current.getContents(); // Get the content from the Quill editor
@@ -26,9 +48,47 @@ const CreateBlog = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Dispatch or submit formData which includes the content
+    try {
+      let thumbnailUrl = '';
+
+      // Upload the thumbnail if it's selected
+      if (formData.thumbnail) {
+        thumbnailUrl = await uploadThumbnail(formData.thumbnail);
+      }
+
+      // Construct the request body
+      const raw = {
+        title: formData.title,
+        content: formData.content,
+        category_ids: formData.category_ids,
+        thumbnail: thumbnailUrl || formData.thumbnail, // Use uploaded URL or existing thumbnail URL
+      };
+
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(raw), // Convert raw object to JSON string
+        redirect: "follow",
+      };
+
+      // Submit the blog data to the API
+      const response = await fetch("https://blog-api.automatex.dev/blogs", requestOptions);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to create blog: ${response.status} - ${errorText}`);
+      }
+
+      // Handle success (e.g., redirect, show success message, etc.)
+      navigate('/'); // Redirect to homepage after successful blog creation
+    } catch (error) {
+      setError('Failed to create blog. Please try again.');
+      console.error('Error creating blog:', error);
+    }
   };
 
   React.useEffect(() => {
@@ -52,6 +112,13 @@ const CreateBlog = () => {
 
   return (
     <div className="container mx-auto p-6">
+      {/* Back Home Button */}
+      <button
+        onClick={() => navigate('/')}
+        className="bg-gray-700 text-white py-2 px-4 rounded-md shadow-md hover:bg-gray-800 transition-colors my-4"
+      >
+        Back Home
+      </button>
       <h2 className="text-2xl font-bold mb-6">Create a New Blog</h2>
 
       {/* Title Input */}
@@ -81,46 +148,8 @@ const CreateBlog = () => {
       {/* Quill Editor */}
       <div ref={quillRef} className="mb-4 p-4 border rounded-md shadow-md" />
 
-      {/* Controls */}
-      <div className="controls mb-4 flex items-center gap-4">
-        <label className="flex items-center">
-          <span className="mr-2">Read Only:</span>
-          <input
-            type="checkbox"
-            checked={readOnly}
-            onChange={(e) => setReadOnly(e.target.checked)}
-            className="form-checkbox"
-          />
-        </label>
-        <button
-          className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-blue-600"
-          type="button"
-          onClick={() => {
-            alert(quillRef.current?.getLength());
-          }}
-        >
-          Get Content Length
-        </button>
-      </div>
-
-      {/* State Display */}
-      <div className="state mb-4">
-        <div className="state-title text-lg font-medium">Current Range:</div>
-        <p className="text-sm">{range ? JSON.stringify(range) : 'Empty'}</p>
-      </div>
-
-      <div className="state mb-6">
-        <div className="state-title text-lg font-medium">Last Change:</div>
-        <p className="text-sm">{lastChange ? JSON.stringify(lastChange.ops) : 'Empty'}</p>
-      </div>
-
-      {/* Back Home Button */}
-      <button
-        onClick={() => navigate('/')}
-        className="bg-gray-700 text-white py-2 px-4 rounded-md shadow-md hover:bg-gray-800 transition-colors"
-      >
-        Back Home
-      </button>
+      {/* Error Message */}
+      {error && <div className="text-red-500 my-4">{error}</div>}
 
       {/* Submit Button */}
       <div className="mt-6">
@@ -128,7 +157,7 @@ const CreateBlog = () => {
           onClick={handleSubmit}
           className="bg-green-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-green-600"
         >
-          Publish Blog
+          Submit
         </button>
       </div>
     </div>
