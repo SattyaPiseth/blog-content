@@ -21,7 +21,7 @@ function Navbar() {
       <div className="bg-blue-200 flex p-3 items-center justify-between rounded">
         <div className="flex items-center">
           <img
-            src="src/assets/—Pngtree—circle clipart black circle_5553148.png"
+            src="src/assets/black-circle-svgrepo-com.svg"
             className="mr-3 h-6 sm:h-9"
             alt="LOGO"
           />

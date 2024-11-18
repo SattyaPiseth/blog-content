@@ -11,7 +11,7 @@ export function NavbarComponent() {
       <Navbar fluid rounded className="bg-blue-200">
         <NavbarBrand href="/">
           <img
-            src="src/assets/Logo.png"
+            src="src/assets/black-circle-svgrepo-com.svg"
             className="mr-3 h-6 sm:h-9"
             alt="LOGO"
           />
