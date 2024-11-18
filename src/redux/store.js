@@ -8,7 +8,6 @@ import bookmarkReducer from "../redux/features/blog/bookmarkSlice";
 import createBlogReducer from './features/createblog/createBlogSlice';
 
 
-
 const store = configureStore({
   reducer: {
     blog: blogReducer,

@@ -78,8 +78,6 @@ function App() {
       <h2 className='text-2xl font-bold my-5'>Recent Posts</h2>
     </div>
     <Card blogs={blogs}/>
-    
-
     </>
   )
 }
