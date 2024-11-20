@@ -1,5 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import LikeIcon from "./Button/LikeIcon";
+import BookmarkButton from "./Button/BookmarkButton";
 
 const Card = ({ blogs }) => {
   return (
@@ -39,7 +41,6 @@ const SingleCard = ({
   date,
   blogId,
 }) => {
- 
   return (
     <div className="mb-10 overflow-hidden rounded-lg bg-white shadow-1 duration-300 hover:shadow-3 dark:bg-dark-2 dark:shadow-card dark:hover:shadow-3">
       <img
@@ -81,7 +82,7 @@ const SingleCard = ({
               </span>
             </div>
           )}
-          <div className="flex gap-4 justify-center mt-4">
+          <div className="flex gap-4 justify-center mt-5">
             {Button && (
               <Link
                 to={btnHref}
@@ -90,20 +91,10 @@ const SingleCard = ({
                 {Button}
               </Link>
             )}
-            {/* Social Icons*/}
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/db15df27ce58dba9cfe945803e23d22c3e4c08c4baaa252de7cd4a26827dbf02?placeholderIfAbsent=true&apiKey=91a4dbf22d714a40962aa33b33fe0fd6"
-              alt="Social icon"
-              className="object-contain w-6 aspect-square cursor-pointer"
-            />
+            {/* Like Icon */}
+            <LikeIcon />
+           <BookmarkButton />
             {/* Bookmark Icon */}
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/b9fb6718387cf4f368800147fbe7f34ad8ffa421b93b62f6ae215f13472b3d29?placeholderIfAbsent=true&apiKey=91a4dbf22d714a40962aa33b33fe0fd6"
-              alt="Bookmark icon"
-              className="object-contain shrink-0 w-6 aspect-square"
-              
-            />
           </div>
         </div>
       </div>

@@ -71,6 +71,20 @@ export const searchBlogs = createAsyncThunk(
   }
 );
 
+// Fetch blogs by category
+export const fetchBlogsByCategory = createAsyncThunk(
+  "blogs/fetchBlogsByCategory",
+  async (categoryId, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`${BASE_URL}blogs?category_id=${categoryId}`);
+      const data = await response.json();
+      return data.blogs || data; // Adjust according to the API response structure
+    } catch (error) {
+      return rejectWithValue(error.message || "something went wrong");
+    }
+  }
+);
+
 // Slice definition
 const blogSlice = createSlice({
   name: "blog",
@@ -110,6 +124,18 @@ const blogSlice = createSlice({
         state.status = "succeeded";
       })
       .addCase(fetchById.rejected, (state, { error }) => {
+        state.error = error.message;
+        state.status = "failed";
+      })
+      // Fetch blogs by category
+      .addCase(fetchBlogsByCategory.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchBlogsByCategory.fulfilled, (state, { payload }) => {
+        state.blogs = payload; // Update with filtered blogs
+        state.status = "succeeded";
+      })
+      .addCase(fetchBlogsByCategory.rejected, (state, { error }) => {
         state.error = error.message;
         state.status = "failed";
       })
@@ -157,6 +183,5 @@ const blogSlice = createSlice({
         state.status = "failed";
       }),
 });
-
 export const { clearSearchResults } = blogSlice.actions;
 export default blogSlice.reducer;

@@ -10,7 +10,7 @@ export default function ProfileCard() {
     <div>
     <NavbarProfile/>
      <UserProfile/>
-     <TableCard/>
+     {/* <TableCard/> */}
     <FooterComponent/>
     </div>
   )

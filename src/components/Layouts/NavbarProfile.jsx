@@ -1,6 +1,6 @@
-import React from 'react';
-import '@fortawesome/fontawesome-free/css/all.min.css'; // Import Font Awesome styles
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import "@fortawesome/fontawesome-free/css/all.min.css"; // Import Font Awesome styles
+import { useNavigate } from "react-router-dom";
 
 function NavbarProfile() {
   const navigate = useNavigate();
@@ -32,27 +32,16 @@ function NavbarProfile() {
             LOGO
           </span>
         </div>
-
-        <div className="flex items-center space-x-4"
-             onClick={handleCreateBlogClick}>
-          {/* Create Blog Icon */}
-          <button className="text-blue-700 hover:text-blue-900">
-            <i className="fas fa-plus-circle text-lg"></i>
-            <span className="ml-2 hidden sm:inline"
-            >Create Blog</span>
-          </button>
-
-          {/* Search Icon */}
-          {/* <button 
-            className="text-blue-700 hover:text-blue-900"
-            onClick={handleSearchClick}
-          >
-            <i className="fas fa-search text-lg"></i>
-            <span className="ml-2 hidden sm:inline">Search</span>
-          </button> */}
-
+        <div className="flex items-center space-x-4">
+          <div onClick={handleCreateBlogClick}>
+            {/* Create Blog Icon */}
+            <button className="text-blue-700 hover:text-blue-900">
+              <i className="fas fa-plus-circle text-lg"></i>
+              <span className="ml-2 hidden sm:inline">Create Blog</span>
+            </button>
+          </div>
           {/* Bookmark Icon */}
-          <button 
+          <button
             className="text-blue-700 hover:text-blue-900"
             onClick={handleBookmarkClick}
           >

@@ -4,7 +4,7 @@ import { fetchAllBlogs } from '../../redux/features/blog/blogSlice';
 import Navbar from '../../components/Layouts/NavbarAccount';
 import { FooterComponent } from '../../components/Layouts/FooterComponent';
 import Card from '../../components/common/card/ProductCard';
-import CategoriesList from '../cardproduct/CategoriesList';
+import BlogList from "../cardproduct/BlogList";
 
 export default function CardAccount() {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ export default function CardAccount() {
       {/* Recent Posts Section */}
       <div className="mx-4 md:mx-10 lg:mx-16">
         <h2 className="text-xl md:text-2xl font-bold my-5 text-center md:text-left">Popular Categories</h2>
-        <CategoriesList/>
+        <BlogList />
         <h2 className="text-xl md:text-2xl font-bold my-5 text-center md:text-left">Recent Posts</h2>
         {status === 'loading' && <p className="text-center text-lg">Loading...</p>}
         {status === 'failed' && <p className="text-center text-red-500">Error: {error}</p>}

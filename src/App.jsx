@@ -1,32 +1,29 @@
-import { useEffect } from 'react'
-import './App.css'
-import Card from './components/common/card/ProductCard'
-import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react';
+import './App.css';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllBlogs } from './redux/features/blog/blogSlice';
-import { Button } from '@material-tailwind/react';
-import CardProduct from "./page/cardproduct/CardProduct";
-import CategoriesList from './page/cardproduct/CategoriesList';
+import { Routes, Route } from 'react-router-dom'; // Only import Routes and Route
 
-
+import Card from './components/common/card/ProductCard';
+import BlogList from './page/cardproduct/BlogList';
+import CategoryPage from './page/cardproduct/CategoryPage'; // Category Page component
 
 function App() {
   const dispatch = useDispatch();
-  const {blogs,status,error} = useSelector((state) => state.blog)
-  // console.log(blogs)
-  useEffect(()=>{
-    if(status === 'idle'){
-      dispatch(fetchAllBlogs())
-    }
-  },[status,dispatch])
+  const { blogs, status } = useSelector((state) => state.blog);
 
-  if(status === 'loading'){
-    return (<>
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchAllBlogs());
+    }
+  }, [status, dispatch]);
+
+  if (status === 'loading') {
+    return (
       <section className="bg-white py-20 dark:bg-dark">
         <div className="container">
           <div className="mx-auto w-full max-w-[370px]">
-            <div
-              className="mb-7 flex h-[200px] w-full items-center justify-center rounded-xl bg-gradient-to-r from-gray-1 to-gray-4 text-secondary-color dark:from-dark-4 dark:to-dark-5"
-            >
+            <div className="mb-7 flex h-[200px] w-full items-center justify-center rounded-xl bg-gradient-to-r from-gray-1 to-gray-4 text-secondary-color dark:from-dark-4 dark:to-dark-5">
               <svg
                 width="28"
                 height="31"
@@ -45,41 +42,45 @@ function App() {
               </svg>
             </div>
             <div className="space-y-4">
-              <div
-                className="h-3 w-full rounded-full bg-gradient-to-r from-gray-1 to-gray-4 dark:from-dark-4 dark:to-dark-5"
-              ></div>
-              <div
-                className="h-3 w-4/6 rounded-full bg-gradient-to-r from-gray-1 to-gray-4 dark:from-dark-4 dark:to-dark-5"
-              ></div>
-              <div
-                className="h-3 w-5/6 rounded-full bg-gradient-to-r from-gray-1 to-gray-4 dark:from-dark-4 dark:to-dark-5"
-              ></div>
+              <div className="h-3 w-full rounded-full bg-gradient-to-r from-gray-1 to-gray-4 dark:from-dark-4 dark:to-dark-5"></div>
+              <div className="h-3 w-4/6 rounded-full bg-gradient-to-r from-gray-1 to-gray-4 dark:from-dark-4 dark:to-dark-5"></div>
+              <div className="h-3 w-5/6 rounded-full bg-gradient-to-r from-gray-1 to-gray-4 dark:from-dark-4 dark:to-dark-5"></div>
             </div>
           </div>
         </div>
       </section>
-      </>);
+    );
   }
 
   return (
-    <>
-    <div className='text-4xl  mx-5 py-5'>
-    <h1 > <strong>Hey, You dev here!</strong>Discover</h1>
-    <h1>my stories and creative ideas.</h1>
-    </div>
-    <div >
-    <h2 className='text-2xl font-bold mx-5 my-5'>Popular Categories</h2>
-    <div >
-      {/* <AddCategoryForm/> */}
-    <CategoriesList />
- </div>
-    </div>
-    <div className='mx-5'>
-      <h2 className='text-2xl font-bold my-5'>Recent Posts</h2>
-    </div>
-    <Card blogs={blogs}/>
-    </>
-  )
+    <Routes>
+      {/* Home Page */}
+      <Route
+        path="/"
+        element={
+          <>
+            <div className="text-4xl mx-5 py-5">
+              <h1>
+                <strong>Hey, You dev here!</strong> Discover
+              </h1>
+              <h1>my stories and creative ideas.</h1>
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold mx-5 my-5">Popular Categories</h2>
+              <BlogList />
+            </div>
+            <div className="mx-5">
+              <h2 className="text-2xl font-bold my-5">Recent Posts</h2>
+            </div>
+            <Card blogs={blogs} />
+          </>
+        }
+      />
+
+      {/* Category Page */}
+      <Route path="/category/:categoryId" element={<CategoryPage />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;

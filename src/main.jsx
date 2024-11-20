@@ -19,9 +19,6 @@ import SearchAndFilter from "./page/cardproduct/SearchAndFilter.jsx";
 
 
 
-
-
-
 const route = createBrowserRouter([
   { path: "/",
     element: <RootLayout />,
@@ -64,11 +61,6 @@ const route = createBrowserRouter([
         path: "/searchandfilter",
         element: <SearchAndFilter/>
       }
-
-  
-      
-   
-
 
   
 ]);

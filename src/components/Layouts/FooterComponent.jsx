@@ -30,10 +30,10 @@ export function FooterComponent() {
         <div className="w-full sm:flex sm:items-center sm:justify-between">
           <FooterCopyright href="#" by="LOGO.All Rights Reserved." year={2024} />
           <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
-            <FooterIcon href="#" icon={BsFacebook} />
-            <FooterIcon href="#" icon={BsInstagram} />
-            <FooterIcon href="#" icon={BsTwitter} />
-            <FooterIcon href="#" icon={BsGithub} />
+            <FooterIcon href="https://www.facebook.com/profile.php?id=100069598534828&mibextid=LQQJ4d" icon={BsFacebook} />
+            <FooterIcon href="https://www.instagram.com/devid_chy/profilecard/?igsh=cWNpMThwaHIzd2Ro" icon={BsInstagram} />
+            <FooterIcon href="https://x.com/home" icon={BsTwitter} />
+            <FooterIcon href="https://github.com/dashboard" icon={BsGithub} />
             <FooterIcon href="#" icon={BsDribbble} />
           </div>
         </div>

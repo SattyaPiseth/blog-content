@@ -1,61 +1,63 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-// Async action to bookmark a blog
-export const bookmarkBlog = createAsyncThunk(
-  'bookmarks/bookmarkBlog',
-  async (blogId, { rejectWithValue }) => {
-    const myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer YOUR_ACCESS_TOKEN");
-
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      redirect: "follow"
-    };
-
+// Async thunk to fetch bookmarked blogs
+export const fetchBookmarkedBlogs = createAsyncThunk(
+  "bookmarks/fetchBookmarkedBlogs",
+  async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch(`https://blog-api.automatex.dev/blogs/${blogId}/bookmark`, requestOptions);  // Added backticks around the URL
+      const response = await fetch("https://blog-api.automatex.dev/users/bookmarked-blogs", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer YOUR_TOKEN_HERE", // Replace with dynamic token
+        },
+      });
+
       if (!response.ok) {
-        throw new Error('Failed to bookmark the blog');
+        throw new Error("Failed to fetch bookmarked blogs");
       }
-      const result = await response.json();
-      return result; // assuming response contains the updated bookmark info
+
+      return await response.json(); // Assuming the API returns an array of blog objects
     } catch (error) {
-      // Check if error is an instance of Error or a message
-      return rejectWithValue(error instanceof Error ? error.message : 'Something went wrong');
+      return rejectWithValue(error.message);
     }
   }
 );
 
-const bookmarkSlice = createSlice({
-  name: 'bookmarks',
+const bookmarksSlice = createSlice({
+  name: "bookmarks",
   initialState: {
-    bookmarks: [],  // List of bookmarked blogs
-    loading: false,
-    error: null
+    items: [], // Array to hold bookmarked blogs
+    status: "idle", // Tracks the fetch status: 'idle', 'loading', 'succeeded', or 'failed'
+    error: null, // Holds any fetch errors
   },
   reducers: {
-    // Optional: Clear bookmarks, or remove a specific bookmark
-    removeBookmark(state, action) {
-      state.bookmarks = state.bookmarks.filter(bookmark => bookmark.id !== action.payload);
-    }
+    toggleBookmark: (state, action) => {
+      const blogId = action.payload;
+      // Check if the blog is already bookmarked
+      if (state.items.some((blog) => blog.id === blogId)) {
+        // Remove from bookmarks
+        state.items = state.items.filter((blog) => blog.id !== blogId);
+      } else {
+        // Add a new blog entry (you might need to fetch blog details for a full object)
+        state.items.push({ id: blogId });
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(bookmarkBlog.pending, (state) => {
-        state.loading = true;
+      .addCase(fetchBookmarkedBlogs.pending, (state) => {
+        state.status = "loading";
       })
-      .addCase(bookmarkBlog.fulfilled, (state, action) => {
-        state.loading = false;
-        state.bookmarks.push(action.payload);  // Add the bookmarked blog
+      .addCase(fetchBookmarkedBlogs.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.items = action.payload; // Populate items with fetched blogs
       })
-      .addCase(bookmarkBlog.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;  // Handle the error
+      .addCase(fetchBookmarkedBlogs.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
       });
-  }
+  },
 });
 
-export const { removeBookmark } = bookmarkSlice.actions;
-
-export default bookmarkSlice.reducer;
+export const { toggleBookmark } = bookmarksSlice.actions;
+export default bookmarksSlice.reducer;

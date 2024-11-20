@@ -8,13 +8,12 @@ const CreateBlog = () => {
     title: '',
     content: '',
     category_ids: ['23c70ee2-df8c-4284-a5b5-3302a0702a6b'],
-    thumbnail: '',
+    thumbnail: '', // Initialize with empty string
   });
 
-  const [error, setError] = useState(''); // State for error message
-
+  const [error, setError] = useState('');
   const quillRef = useRef();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
 
   // Function to upload thumbnail
   const uploadThumbnail = async (file) => {
@@ -28,17 +27,17 @@ const CreateBlog = () => {
       });
   
       if (!response.ok) {
-        const errorText = await response.text();  // Change to text() to catch the error message
+        const errorText = await response.text();
         throw new Error(`Failed to upload thumbnail: ${response.status} - ${errorText}`);
       }
   
       const data = await response.json();
-      return data.url;
+      return data.url; // Return the URL of the uploaded image
     } catch (error) {
       console.error('Thumbnail upload error:', error.message);
       throw error;
     }
-  };  
+  };
 
   const handleEditorChange = () => {
     const editorContent = quillRef.current.getContents(); // Get the content from the Quill editor
@@ -51,19 +50,14 @@ const CreateBlog = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let thumbnailUrl = '';
-
-      // Upload the thumbnail if it's selected
-      if (formData.thumbnail) {
-        thumbnailUrl = await uploadThumbnail(formData.thumbnail);
-      }
+      let thumbnailUrl = formData.thumbnail ? await uploadThumbnail(formData.thumbnail) : formData.thumbnail;
 
       // Construct the request body
       const raw = {
         title: formData.title,
         content: formData.content,
         category_ids: formData.category_ids,
-        thumbnail: thumbnailUrl || formData.thumbnail, // Use uploaded URL or existing thumbnail URL
+        thumbnail: thumbnailUrl, // Use the uploaded thumbnail URL
       };
 
       const requestOptions = {
@@ -72,7 +66,6 @@ const CreateBlog = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(raw), // Convert raw object to JSON string
-        redirect: "follow",
       };
 
       // Submit the blog data to the API
@@ -101,7 +94,7 @@ const CreateBlog = () => {
           [{ 'list': 'ordered' }, { 'list': 'bullet' }],
           ['bold', 'italic', 'underline', 'strike'],
           ['link', 'image', 'blockquote'],
-          ['code-block'], // Add the code-block button to the toolbar
+          ['code-block'],
         ],
       },
     });
@@ -114,7 +107,7 @@ const CreateBlog = () => {
     <div className="container mx-auto p-6">
       {/* Back Home Button */}
       <button
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/cardaccount')}
         className="bg-gray-700 text-white py-2 px-4 rounded-md shadow-md hover:bg-gray-800 transition-colors my-4"
       >
         Back Home

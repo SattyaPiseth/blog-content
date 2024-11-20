@@ -37,7 +37,7 @@ function UserProfile() {
 
   // Show loading state while profile is being fetched
   if (loading) {
-    return <p>Loading profile data...</p>;
+    return <p className="text-center">Loading profile data...</p>;
   }
 
   // Show error if profile fetch fails
