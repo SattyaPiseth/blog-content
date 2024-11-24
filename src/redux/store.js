@@ -6,6 +6,7 @@ import profileReducer from "../redux/features/profile/profileSlice";
 import categoryReducer from "../redux/features/category/categorySlice";
 import bookmarkReducer from "../redux/features/blog/bookmarkSlice";
 import createBlogReducer from './features/createblog/createBlogSlice';
+import fileReducer from './features/file/fileSlice';
 
 
 const store = configureStore({
@@ -16,6 +17,7 @@ const store = configureStore({
     category: categoryReducer,
     bookmarks: bookmarkReducer,
     createBlog: createBlogReducer,
+    files: fileReducer
     
    
   },
